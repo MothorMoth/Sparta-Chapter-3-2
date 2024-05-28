@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 _lookInput;
 
     private Rigidbody _rigidbody;
+    private Vector3 _resetPosition;
 
     private void Awake()
     {
@@ -27,6 +28,15 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        _resetPosition = transform.position;
+    }
+
+    private void Update()
+    {
+        if (transform.position.y <= -15f)
+        {
+            transform.position = _resetPosition;
+        }
     }
 
     private void FixedUpdate()
