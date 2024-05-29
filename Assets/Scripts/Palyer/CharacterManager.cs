@@ -1,15 +1,15 @@
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class CharacterManager : MonoBehaviour
 {
-    private static PlayerManager _instance;
-    public static PlayerManager Instance
+    private static CharacterManager _instance;
+    public static CharacterManager Instance
     {
         get
         {
             if (_instance == null)
             {
-                _instance = new GameObject("PlayerManager").AddComponent<PlayerManager>();
+                _instance = new GameObject("PlayerManager").AddComponent<CharacterManager>();
             }
 
             return _instance;

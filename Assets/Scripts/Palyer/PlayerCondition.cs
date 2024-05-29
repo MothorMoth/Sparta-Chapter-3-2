@@ -30,6 +30,11 @@ public class PlayerCondition : MonoBehaviour, IDamagable
         Health.Add(amount);
     }
 
+    public void IncreaseStamina(float amount)
+    {
+        Stamina.Add(amount);
+    }
+
     public void TakeDamage(int damageAmount)
     {
         Health.Subtract(damageAmount);

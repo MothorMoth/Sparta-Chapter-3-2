@@ -26,6 +26,7 @@ public class ItemData : ScriptableObject
 {
     [Header("info")]
     public ItemType type;
+    public GameObject dropPrefab;
     public Sprite icon;
     public string itemName;
     public string description;
@@ -35,5 +36,5 @@ public class ItemData : ScriptableObject
     public int maxStackAmount;
 
     [Header("Consumable")]
-    public ItemDataConsumable consumable;
+    public ItemDataConsumable[] consumables;
 }

@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Item_Stamina
   m_EditorClassIdentifier: 
   type: 0
-  icon: {fileID: 0}
+  dropPrefab: {fileID: 8701124288097394927, guid: e784959da166dfe439be2e36f8a16839, type: 3}
+  icon: {fileID: 786850841, guid: d01a070329061fc469c171a3ca597f14, type: 3}
   itemName: "\uC2A4\uD14C\uBBF8\uB098 \uAD6C\uC2AC"
   description: "\uC2A4\uD14C\uBBF8\uB098\uAC00 \uC77C\uC815\uB7C9 \uD68C\uBCF5\uB41C\uB2E4."
   canStack: 1
   maxStackAmount: 99
-  consumable:
-    type: 1
+  consumables:
+  - type: 1
     value: 50

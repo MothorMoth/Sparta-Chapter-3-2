@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,9 +22,12 @@ public class PlayerController : MonoBehaviour
     public float lookSensitivity;
     private float _cameraXRotation;
     private Vector2 _lookInput;
+    public bool canLook = true;
 
     private Rigidbody _rigidbody;
     private Vector3 _resetPosition;
+
+    public Action inventory;
 
     private void Awake()
     {
@@ -51,7 +55,10 @@ public class PlayerController : MonoBehaviour
 
     private void LateUpdate()
     {
-        CameraLook();
+        if (canLook)
+        {
+            CameraLook();
+        }
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -93,7 +100,7 @@ public class PlayerController : MonoBehaviour
     {
         while (_isRun)
         {
-            if (!PlayerManager.Instance.Player.condition.UseStamina(staminaCost))
+            if (!CharacterManager.Instance.Player.condition.UseStamina(staminaCost))
             {
                 _isRun = false;
             }
@@ -148,6 +155,22 @@ public class PlayerController : MonoBehaviour
     private void ResetPosition()
     {
         transform.position = _resetPosition;
-        PlayerManager.Instance.Player.condition.TakeDamage(1);
+        CharacterManager.Instance.Player.condition.TakeDamage(1);
+    }
+
+    public void OnInventory(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started)
+        {
+            inventory?.Invoke();
+            ToggleCursor();
+        }
+    }
+
+    private void ToggleCursor()
+    {
+        bool toggle = Cursor.lockState == CursorLockMode.Locked;
+        Cursor.lockState = toggle ? CursorLockMode.None : CursorLockMode.Locked;
+        canLook = !toggle;
     }
 }

@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Item_Health
   m_EditorClassIdentifier: 
   type: 0
-  icon: {fileID: 0}
+  dropPrefab: {fileID: 6534403456711944315, guid: 45a817073120196449f38bce0ee31e77, type: 3}
+  icon: {fileID: -679079472, guid: d01a070329061fc469c171a3ca597f14, type: 3}
   itemName: "\uCCB4\uB825 \uAD6C\uC2AC"
   description: "\uCCB4\uB825\uC774 \uD68C\uBCF5\uB41C\uB2E4."
   canStack: 1
   maxStackAmount: 99
-  consumable:
-    type: 0
+  consumables:
+  - type: 0
     value: 1
