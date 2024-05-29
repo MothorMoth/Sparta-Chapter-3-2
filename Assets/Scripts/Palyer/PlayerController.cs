@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private bool _isSpeedBuffActive;
     private float _speedBuffDuration;
     private float _speedBuffValue;
+    private bool _isOnMovingFloor;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -30,6 +31,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody _rigidbody;
     private Vector3 _resetPosition;
+    private Vector3 _curMovingFloorVelocity;
 
     public Action inventory;
 
@@ -98,7 +100,7 @@ public class PlayerController : MonoBehaviour
         direction *= _isSpeedBuffActive ? _speedBuffValue : 1f;
         direction.y = _rigidbody.velocity.y;
 
-        _rigidbody.velocity = direction;
+        _rigidbody.velocity = _isOnMovingFloor ? direction + _curMovingFloorVelocity : direction;
     }
 
     private IEnumerator StaminaCoroutine()
@@ -129,6 +131,25 @@ public class PlayerController : MonoBehaviour
         {
             yield return new WaitForSeconds(_speedBuffDuration);
             _isSpeedBuffActive = false;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("MovingFloor"))
+        {
+            collision.gameObject.TryGetComponent(out Rigidbody rb);
+            _curMovingFloorVelocity = rb.velocity;
+            _isOnMovingFloor = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("MovingFloor"))
+        {
+            _isOnMovingFloor = false;
+            _curMovingFloorVelocity = Vector3.zero;
         }
     }
 
