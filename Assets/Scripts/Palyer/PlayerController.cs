@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,10 +6,13 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    public float moveSpeedMultiplier;
     public float jumpForce;
-    public float jumpCost;
+    public float staminaCost;
     public LayerMask groundLayerMask;
     private Vector2 _moveInput;
+    private bool _isRun;
+    private IEnumerator _staminaCoroutine;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -62,13 +66,40 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnRun(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            _isRun = true;
+            _staminaCoroutine = StaminaCoroutine();
+            StartCoroutine(_staminaCoroutine);
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            _isRun = false;
+        }
+    }
+
     private void Move()
     {
         Vector3 direction = transform.forward * _moveInput.y + transform.right * _moveInput.x;
-        direction *= moveSpeed;
+        direction *= _isRun ? moveSpeed * moveSpeedMultiplier : moveSpeed;
         direction.y = _rigidbody.velocity.y;
 
         _rigidbody.velocity = direction;
+    }
+
+    private IEnumerator StaminaCoroutine()
+    {
+        while (_isRun)
+        {
+            if (!PlayerManager.Instance.Player.condition.UseStamina(staminaCost))
+            {
+                _isRun = false;
+            }
+
+            yield return new WaitForSeconds(1f);
+        }
     }
 
     public void OnLook(InputAction.CallbackContext context)
@@ -90,7 +121,6 @@ public class PlayerController : MonoBehaviour
         if (context.phase == InputActionPhase.Started && IsGrounded())
         {
             _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
-            PlayerManager.Instance.Player.condition.UseStamina(jumpCost);
         }
     }
 

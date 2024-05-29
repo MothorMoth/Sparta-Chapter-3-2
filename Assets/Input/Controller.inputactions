@@ -33,7 +33,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Iteract",
+                    "name": "Run",
+                    "type": "Button",
+                    "id": "4752b371-3fb3-4085-90a2-f1fdf08bffb4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
                     "type": "Button",
                     "id": "864e4a58-450b-4e11-904d-13bb5dbcbd9c",
                     "expectedControlType": "Button",
@@ -189,7 +198,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
-                    "action": "Iteract",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -201,6 +210,17 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "54c9e711-ce67-42d2-8e1a-ba50c567e85b",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
