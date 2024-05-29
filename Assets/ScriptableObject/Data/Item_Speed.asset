@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8316931fc982ab4e9463211932c519b, type: 3}
   m_Name: Item_Speed
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   dropPrefab: {fileID: 2771094293909878327, guid: bc106d6fc6d5c954591f8b566cb0f68b, type: 3}
   icon: {fileID: 1835813126, guid: d01a070329061fc469c171a3ca597f14, type: 3}
   itemName: "\uC2A4\uD53C\uB4DC \uAD6C\uC2AC"
@@ -20,3 +20,7 @@ MonoBehaviour:
   canStack: 1
   maxStackAmount: 99
   consumables: []
+  buffs:
+  - type: 0
+    duration: 5
+    value: 3

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 _moveInput;
     private bool _isRun;
     private IEnumerator _staminaCoroutine;
+    private bool _isSpeedBuffActive;
+    private float _speedBuffDuration;
+    private float _speedBuffValue;
 
     [Header("Look")]
     public Transform cameraContainer;
@@ -91,6 +95,7 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 direction = transform.forward * _moveInput.y + transform.right * _moveInput.x;
         direction *= _isRun ? moveSpeed * moveSpeedMultiplier : moveSpeed;
+        direction *= _isSpeedBuffActive ? _speedBuffValue : 1f;
         direction.y = _rigidbody.velocity.y;
 
         _rigidbody.velocity = direction;
@@ -106,6 +111,24 @@ public class PlayerController : MonoBehaviour
             }
 
             yield return new WaitForSeconds(1f);
+        }
+    }
+
+    public void SetSpeedBuff(float duration, float value)
+    {
+        _speedBuffDuration = duration;
+        _speedBuffValue = value;
+        StartCoroutine(SpeedBuff());
+    }
+
+    private IEnumerator SpeedBuff()
+    {
+        _isSpeedBuffActive = true;
+
+        while (_isSpeedBuffActive)
+        {
+            yield return new WaitForSeconds(_speedBuffDuration);
+            _isSpeedBuffActive = false;
         }
     }
 

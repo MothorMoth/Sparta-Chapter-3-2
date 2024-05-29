@@ -4,13 +4,18 @@ using UnityEngine;
 public enum ItemType
 {
     Consumable,
+    Buff,
     Equipable
 }
 
 public enum ConsumableType
 {
     Health,
-    Stamina,
+    Stamina
+}
+
+public enum BuffType
+{
     Speed
 }
 
@@ -18,6 +23,14 @@ public enum ConsumableType
 public class ItemDataConsumable
 {
     public ConsumableType type;
+    public float value;
+}
+
+[Serializable]
+public class ItemDataBuff
+{
+    public BuffType type;
+    public float duration;
     public float value;
 }
 
@@ -37,4 +50,7 @@ public class ItemData : ScriptableObject
 
     [Header("Consumable")]
     public ItemDataConsumable[] consumables;
+
+    [Header("Buff")]
+    public ItemDataBuff[] buffs;
 }
