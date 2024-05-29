@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed;
     public float jumpForce;
+    public float jumpCost;
     public LayerMask groundLayerMask;
     private Vector2 _moveInput;
 
@@ -35,7 +36,7 @@ public class PlayerController : MonoBehaviour
     {
         if (transform.position.y <= -15f)
         {
-            transform.position = _resetPosition;
+            ResetPosition();
         }
     }
 
@@ -88,13 +89,8 @@ public class PlayerController : MonoBehaviour
     {
         if (context.phase == InputActionPhase.Started && IsGrounded())
         {
-            //if (PlayerManager.Instance.Player.condition.uiCondition.stamina.curValue < jumpCost)
-            //{
-            //    return;
-            //}
-
             _rigidbody.AddForce(Vector2.up * jumpForce, ForceMode.Impulse);
-            //PlayerManager.Instance.Player.condition.uiCondition.stamina.Subtract(jumpCost);
+            PlayerManager.Instance.Player.condition.UseStamina(jumpCost);
         }
     }
 
@@ -117,5 +113,11 @@ public class PlayerController : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void ResetPosition()
+    {
+        transform.position = _resetPosition;
+        PlayerManager.Instance.Player.condition.TakeDamage(1);
     }
 }
